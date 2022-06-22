@@ -35,7 +35,7 @@ class CachedReplayExtensionTest extends TestCase
         $item->set(
             [
                 'replayId'  => 500,
-                'timestamp' => $now->format(\DATE_ISO8601),
+                'timestamp' => $now->format(\DATE_ATOM),
             ]
         );
         $item->expiresAfter(new \DateInterval('P1D'));
@@ -104,7 +104,7 @@ class CachedReplayExtensionTest extends TestCase
         $item = $adapter->getItem($key);
         $value = $item->get();
 
-        $this->assertEquals($now->format(\DATE_ISO8601), $value['timestamp']);
+        $this->assertEquals($now->format(\DATE_ATOM), $value['timestamp']);
         $this->assertEquals(500, $value['replayId']);
     }
 }

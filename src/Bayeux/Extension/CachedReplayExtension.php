@@ -33,7 +33,7 @@ class CachedReplayExtension extends ReplayExtension
             $cache = $this->adapter->getItem($key)->get();
             if (is_array($cache) && array_key_exists('timestamp', $cache) && array_key_exists('replayId', $cache)) {
                 $timestamp = \DateTime::createFromFormat(
-                    \DATE_ISO8601,
+                    \DATE_ATOM,
                     $cache['timestamp'],
                     new \DateTimeZone("UTC")
                 );
@@ -57,7 +57,7 @@ class CachedReplayExtension extends ReplayExtension
         $item->set(
             [
                 'replayId'  => $replayId,
-                'timestamp' => $timestamp->format(\DATE_ISO8601),
+                'timestamp' => $timestamp->format(\DATE_ATOM),
             ]
         );
         $item->expiresAfter(new \DateInterval('P1D'));

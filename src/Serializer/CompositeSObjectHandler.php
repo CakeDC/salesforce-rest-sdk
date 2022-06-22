@@ -13,6 +13,7 @@ use AE\SalesforceRestSdk\Model\Rest\Composite\CompositeSObject;
 use JMS\Serializer\Context;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\GraphNavigator;
+use JMS\Serializer\GraphNavigatorInterface;
 use JMS\Serializer\Handler\SubscribingHandlerInterface;
 use JMS\Serializer\JsonDeserializationVisitor;
 use JMS\Serializer\JsonSerializationVisitor;
@@ -27,13 +28,13 @@ class CompositeSObjectHandler implements SubscribingHandlerInterface
     {
         return [
             [
-                'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
+                'direction' => GraphNavigatorInterface::DIRECTION_SERIALIZATION,
                 'type' => CompositeSObject::class,
                 'format' => 'json',
                 'method' => 'serializeCompositeSObjectTojson'
             ],
             [
-                'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
+                'direction' => GraphNavigatorInterface::DIRECTION_DESERIALIZATION,
                 'type' => CompositeSObject::class,
                 'format' => 'json',
                 'method' => 'deserializeCompositeSObjectFromjson'
@@ -72,7 +73,7 @@ class CompositeSObjectHandler implements SubscribingHandlerInterface
                     case \DateTime::class:
                     case \DateTimeImmutable::class:
                         $dateMeta = new StaticPropertyMetadata(\DateTime::class, $field, $value);
-                        $dateMeta->setType(['name' => 'DateTime', 'params' => [\DATE_ISO8601, 'UTC']]);
+                        $dateMeta->setType(['name' => 'DateTime', 'params' => [\DATE_ATOM, 'UTC']]);
                         $visitor->visitProperty($dateMeta, $value);
                         break;
                     default:
@@ -136,10 +137,10 @@ class CompositeSObjectHandler implements SubscribingHandlerInterface
                 )
                 ;
             } elseif (is_string($value)
-                && preg_match('/^\d{4}-\d{2}-\d{2}\T\d{2}:\d{2}:\d{2}(\.\d{4})?(\+\d{4}|\Z)$/', $value) != false) {
+                && preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{4})?(\+\d{4}|\Z)$/', $value) != false) {
                 $sobject->$field = $context->getNavigator()->accept(
                     $value,
-                    ['name' => 'DateTime', 'params' => [\DATE_ISO8601, 'UTC']]
+                    ['name' => 'DateTime', 'params' => [\DATE_ATOM, 'UTC']]
                 );
             } else {
                 $sobject->$field = $value;

@@ -273,7 +273,7 @@ $channel->subscribe(
         $event = $payload->getEvent();
         
         echo $event->getType(); // "created", "updated", "undeleted", "deleted"
-        echo $event->getCreatedDate()->format(\DATE_ISO8601); // outputs the datetime the event was created
+        echo $event->getCreatedDate()->format(\DATE_ATOM); // outputs the datetime the event was created
         echo $event->getReplayId(); // This ia n ID used by the replay extension so it can pick up the feed where it left off
         
         $sobject = $payload->getSobject();
