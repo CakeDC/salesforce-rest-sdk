@@ -7,9 +7,9 @@
         "guzzlehttp/guzzle": "^7.0",
         "jms/serializer": "^3.0",
         "ramsey/uuid": "^4.0",
-        "doctrine/collections": "^1.5",
-        "symfony/cache": "^5.0|^6.0",
-        "symfony/expression-language": "^5.0|^6.0",
+        "doctrine/collections": "^1.5|^2.0",
+        "symfony/cache": "^5.0|^6.0|^7.0",
+        "symfony/expression-language": "^5.0|^6.0|^7.0",
         "jms/metadata": "^1.0|^2.0"
     },
     "license": "proprietary",
